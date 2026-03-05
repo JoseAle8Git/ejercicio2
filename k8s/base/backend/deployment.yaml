@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-back
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-back
+  template:
+    metadata:
+      labels:
+        app: spring-back
+    spec:
+      containers:
+      - name: spring-back
+        image: ghcr.io/joseale8git/ejercicio2-back:latest
+        ports:
+        - containerPort: 8080

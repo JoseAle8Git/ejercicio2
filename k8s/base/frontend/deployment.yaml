@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: js-front
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: js-front
+  template:
+    metadata:
+      labels:
+        app: js-front
+    spec:
+      containers:
+      - name: js-front
+        image: ghcr.io/joseale8git/ejercicio2-front:latest
+        ports:
+        - containerPort: 3000
