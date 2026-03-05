@@ -1,0 +1,38 @@
+# mi-aplicacion/values.yaml
+
+# Configuración centralizada del Backend
+backend:
+  enabled: true
+  name: spring-api
+  image:
+    repository: ghcr.io/joseale8git/ejercicio2-back
+    tag: latest
+    pullPolicy: Always
+  service:
+    type: ClusterIP # Solo visible dentro del clúster (para el front)
+    port: 8080      # Puerto externo del servicio
+    targetPort: 8080 # Puerto interno del contenedor (Spring Boot)
+
+# Configuración centralizada del Frontend
+frontend:
+  enabled: true
+  name: node-web
+  image:
+    repository: ghcr.io/joseale8git/ejercicio2-front
+    tag: latest
+    pullPolicy: Always
+  service:
+    type: LoadBalancer # Para acceder desde fuera (vía Minikube tunnel)
+    port: 3000      # Puerto externo
+    targetPort: 3000 # Puerto interno (Node server.js)
+
+# Configuración centralizada de PostgreSQL (Sobrescribimos valores del chart oficial)
+postgresql:
+  enabled: true
+  auth:
+    database: ejercicio_db
+    username: spring_user
+    password: "super_secret_password"
+  primary:
+    persistence:
+      enabled: false # Para este ejercicio, no queremos discos persistentes
