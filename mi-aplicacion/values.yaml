@@ -29,10 +29,24 @@ frontend:
 # Configuración centralizada de PostgreSQL (Sobrescribimos valores del chart oficial)
 postgresql:
   enabled: true
+  image:
+    registry: docker.io
+    repository: postgres
+    tag: 16-alpine
   auth:
     database: ejercicio_db
     username: spring_user
     password: "super_secret_password"
   primary:
     persistence:
-      enabled: false # Para este ejercicio, no queremos discos persistentes
+      enabled: false
+    # --- AÑADE ESTO PARA QUE LA IMAGEN OFICIAL CREE LA DB ---
+    extraEnvVars:
+      - name: POSTGRES_DB
+        value: "ejercicio_db"
+      - name: POSTGRES_USER
+        value: "spring_user"
+      - name: POSTGRES_PASSWORD
+        value: "super_secret_password"
+    containerSecurityContext:
+      readOnlyRootFilesystem: false

@@ -26,7 +26,6 @@ spec:
             - containerPort: {{ .Values.backend.service.targetPort }}
               protocol: TCP
           env:
-            # Aquí es donde ocurre la magia de la conexión con Postgres
             - name: SPRING_DATASOURCE_URL
               value: "jdbc:postgresql://{{ .Release.Name }}-postgresql:5432/{{ .Values.postgresql.auth.database }}"
             - name: SPRING_DATASOURCE_USERNAME
